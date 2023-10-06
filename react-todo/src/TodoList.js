@@ -1,11 +1,15 @@
 import React from "react"
 
 function TodoList() {
-  const todoList = []
+  const todoList = [
+    { id: 1, title: "Complete assignment" },
+    { id: 2, title: "Review course materials" },
+    { id: 3, title: "Submit project proposal" }
+  ]
   return (
     <ul>
-      {todoList.map((item, index) => (
-        <li key={index}>{item}</li>
+      {todoList.map((todoItem) => (
+        <li key={todoItem.id}>{todoItem.title}</li>
       ))}
     </ul>
   )
