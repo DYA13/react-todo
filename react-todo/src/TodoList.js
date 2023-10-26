@@ -1,10 +1,7 @@
 import React from "react"
 import TodoListItem from "./TodoListItem"
-//Step 3: Add props as a parameter to the TodoList component
-function TodoList(props) {
-  // Step 4: Change todoList to reference props instead of the hard-coded variable
-  const todoList = props.todoList
 
+function TodoList({ todoList }) {
   return (
     <ul>
       {todoList.map((todoItem) => (
