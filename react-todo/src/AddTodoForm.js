@@ -1,31 +1,37 @@
 import React, { useState } from "react"
 
 const AddTodoForm = (props) => {
-  const [title, setTitle] = useState("")
+  // Step 1: Create a state variable for the input value
+  const [todoTitle, setTodoTitle] = useState("") // Step 3: Use the todoTitle state as the value prop
 
+  // Step 4: Declare the handleTitleChange function
   const handleTitleChange = (event) => {
-    setTitle(event.target.value)
+    // Retrieve the input value from the event object and update the state
+    const newTodoTitle = event.target.value
+    setTodoTitle(newTodoTitle)
   }
 
   const handleAddTodo = (event) => {
     event.preventDefault()
 
-    const todoTitle = event.target.elements.title.value // Retrieve the value of the title input field
-    console.log(todoTitle)
-
+    // Step 5: Update onAddTodo to use the todoTitle state
     props.onAddTodo(todoTitle)
-    event.target.reset() // Reset the form to clear the text input
+
+    event.target.reset()
   }
+
   return (
     <form onSubmit={handleAddTodo}>
+      {/* Step 2: Modify the input to be a controlled input */}
       <input
         type='text'
         name='title'
-        value={title}
-        onChange={handleTitleChange}
+        value={todoTitle} // Step 3: Use the todoTitle state as the value prop
+        onChange={handleTitleChange} // Step 3: Use handleTitleChange for onChange
       />
       <button type='submit'>Add Todo</button>
     </form>
   )
 }
+
 export default AddTodoForm
