@@ -3,7 +3,9 @@ import TodoList from "./TodoList"
 import AddTodoForm from "./AddTodoForm"
 
 function App() {
-  const [todoList, setTodoList] = useState([])
+  const [todoList, setTodoList] = useState(
+    JSON.parse(localStorage.getItem("savedTodoList")) || []
+  )
 
   const addTodo = (newTodo) => {
     setTodoList([...todoList, { id: Date.now(), title: newTodo }])
