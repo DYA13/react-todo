@@ -21,10 +21,11 @@ function App() {
   return (
     <div>
       <h1>Todo List</h1>
+      <>
+        <AddTodoForm onAddTodo={addTodo} />
 
-      <AddTodoForm onAddTodo={addTodo} />
-
-      <TodoList todoList={todoList} />
+        <TodoList todoList={todoList} />
+      </>
     </div>
   )
 }
