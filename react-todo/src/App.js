@@ -17,14 +17,18 @@ function App() {
     setTodoList([...todoList, { id: Date.now(), title: newTodo }])
   }
   const [todoList, setTodoList] = useSemiPersistentState("savedTodoList", [])
-
+  const removeTodo = (id) => {
+    // Use the filter method to create a new array without the item with the given id.
+    const updatedTodoList = todoList.filter((todo) => todo.id !== id)
+    setTodoList(updatedTodoList)
+  }
   return (
     <div>
       <h1>Todo List</h1>
       <>
         <AddTodoForm onAddTodo={addTodo} />
 
-        <TodoList todoList={todoList} />
+        <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
       </>
     </div>
   )
