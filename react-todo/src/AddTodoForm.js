@@ -12,6 +12,7 @@ const AddTodoForm = ({ onAddTodo }) => {
     event.preventDefault()
     onAddTodo(todoTitle)
     event.target.reset()
+    setTodoTitle("")
   }
 
   return (
