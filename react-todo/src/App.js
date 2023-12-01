@@ -11,6 +11,21 @@ function App() {
     // Step 2: Use the spread operator to update todoList with a new todo
     setTodoList([...todoList, { id: Date.now(), title: newTodo }])
   }
+  const [todoList, setTodoList] = useSemiPersistentState("savedTodoList", [])
+  const removeTodo = (id) => {
+    // Use the filter method to create a new array without the item with the given id.
+    const updatedTodoList = todoList.filter((todo) => todo.id !== id)
+    setTodoList(updatedTodoList)
+  }
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <>
+        <AddTodoForm onAddTodo={addTodo} />
+
+        <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+      </>
+
 
   return (
     <div>
@@ -19,6 +34,7 @@ function App() {
       <AddTodoForm onAddTodo={addTodo} />
       {/* Step 2: Pass todoList as a prop to TodoList */}
       <TodoList todoList={todoList} />
+
     </div>
   )
 }
