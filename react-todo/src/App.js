@@ -24,10 +24,8 @@ function App() {
       }
 
       const data = await response.json()
-      console.log("API Response:", data)
 
       const todos = data.records.map((record) => {
-        console.log("Record Fields:", record.fields)
         return { id: record.id, title: record.fields.title }
       })
 
@@ -42,8 +40,6 @@ function App() {
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  console.log("Todo List Data:", todoList)
 
   const addTodo = async (newTodo) => {
     const title = {
