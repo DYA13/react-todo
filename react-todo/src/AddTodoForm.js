@@ -4,14 +4,16 @@ const AddTodoForm = ({ onAddTodo }) => {
   const [todoTitle, setTodoTitle] = useState("")
 
   const handleTitleChange = (event) => {
-    let newTodoTitle = event.target.value
+    const newTodoTitle = event.target.value
     setTodoTitle(newTodoTitle)
   }
 
   const handleAddTodo = (event) => {
     event.preventDefault()
+    if (todoTitle === "") {
+      return
+    }
     onAddTodo(todoTitle)
-    event.target.reset()
     setTodoTitle("")
   }
 

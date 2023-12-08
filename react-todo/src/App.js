@@ -24,12 +24,10 @@ function App() {
       }
 
       const data = await response.json()
-      console.log("API Response:", data)
-      // Transform the data into todo objects
-      const todos = data.records.map((record) => ({
-        id: record.id,
-        title: record.fields.title
-      }))
+
+      const todos = data.records.map((record) => {
+        return { id: record.id, title: record.fields.title }
+      })
 
       setTodoList(todos)
       setLoading(false)
@@ -70,6 +68,7 @@ function App() {
       setTodoList([...todoList, newTodoItem])
     } catch (error) {
       console.log(error.message)
+      return
     }
   }
 
