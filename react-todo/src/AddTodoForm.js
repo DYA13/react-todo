@@ -4,7 +4,7 @@ const AddTodoForm = ({ onAddTodo }) => {
   const [todoTitle, setTodoTitle] = useState("")
 
   const handleTitleChange = (event) => {
-    const newTodoTitle = event.target.value
+    let newTodoTitle = event.target.value
     setTodoTitle(newTodoTitle)
   }
 
@@ -18,6 +18,8 @@ const AddTodoForm = ({ onAddTodo }) => {
   return (
     <form onSubmit={handleAddTodo}>
       <InputWithLabel
+        id='todoTitle'
+        value={todoTitle}
         todoTitle={todoTitle}
         handleTitleChange={handleTitleChange}
       >

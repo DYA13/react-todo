@@ -3,56 +3,109 @@ import TodoList from "./TodoList"
 import AddTodoForm from "./AddTodoForm"
 
 function App() {
-  const key = "savedTodoList"
-
-  // Step 1: Create a state variable for todoList
   const [todoList, setTodoList] = useState([])
   const [loading, setLoading] = useState(true)
+  const airtableUrl = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}`
+  const airtableToken = process.env.REACT_APP_AIRTABLE_API_TOKEN
 
-  // Step 2: Declare the addTodo function
-  const addTodo = (newTodo) => {
-    // Step 2: Use the spread operator to update todoList with a new todo
-    setTodoList([...todoList, { id: Date.now(), title: newTodo }])
-  }
-
-  const removeTodo = (id) => {
-    const updatedTodoList = todoList.filter((todo) => todo.id !== id)
-    setTodoList(updatedTodoList)
-  }
-
-  useEffect(() => {
-    const fetchData = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          data: { todoList: JSON.parse(localStorage.getItem(key)) || [] }
-        })
-      }, 2000)
-    })
-
-    fetchData.then((result) => {
-      setTodoList(result.data.todoList)
-      setLoading(false)
-    })
-  }, [key])
-
-  useEffect(() => {
-    if (!loading) {
-      localStorage.setItem(key, JSON.stringify(todoList))
+  const fetchData = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${airtableToken}`
+      }
     }
-  }, [key, loading, todoList])
+
+    try {
+      const response = await fetch(airtableUrl, options)
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`)
+      }
+
+      const data = await response.json()
+      console.log("API Response:", data)
+      // Transform the data into todo objects
+      const todos = data.records.map((record) => ({
+        id: record.id,
+        title: record.fields.title
+      }))
+
+      setTodoList(todos)
+      setLoading(false)
+    } catch (error) {
+      console.error("Error fetching data:", error.message)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const addTodo = async (newTodo) => {
+    const title = {
+      fields: {
+        title: newTodo
+      }
+    }
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${airtableToken}`
+      },
+      body: JSON.stringify(title)
+    }
+
+    try {
+      const response = await fetch(airtableUrl, options)
+
+      if (!response.ok) {
+        throw new Error(`Error has occurred: ${response.status}`)
+      }
+
+      const todo = await response.json()
+      const newTodoItem = { id: todo.id, title: todo.fields.title }
+      setTodoList([...todoList, newTodoItem])
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const removeTodo = async (id) => {
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${airtableToken}`
+      }
+    }
+
+    try {
+      const response = await fetch(`${airtableUrl}/${id}`, options)
+
+      if (!response.ok) {
+        throw new Error(`Error has occurred: ${response.status}`)
+      }
+
+      const newTodoList = todoList.filter((todo) => id !== todo.id)
+      setTodoList(newTodoList)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
-    <div>
+    <>
       <h1>Todo List</h1>
-      {/* Step 3: Pass the addTodo function as a prop to AddTodoForm */}
       <AddTodoForm onAddTodo={addTodo} />
-      {/* Step 2: Pass todoList and onRemoveTodo as props to TodoList */}
       {loading ? (
-        <p>Loading...</p>
+        <p>Loading ...</p>
       ) : (
         <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
       )}
-    </div>
+    </>
   )
 }
 
