@@ -3,15 +3,19 @@ import TodoListItem from "./TodoListItem"
 
 function TodoList({ todoList, onRemoveTodo }) {
   return (
-    <ul>
-      {todoList.map((todoItem) => (
-        <TodoListItem
-          key={todoItem.id}
-          todo={todoItem}
-          onRemoveTodo={onRemoveTodo}
-        />
-      ))}
-    </ul>
+    <>
+      <ul>
+        {todoList.map((todo) => {
+          return (
+            <TodoListItem
+              key={todo.id}
+              todo={todo}
+              onRemoveTodo={onRemoveTodo}
+            />
+          )
+        })}
+      </ul>
+    </>
   )
 }
 

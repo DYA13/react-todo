@@ -10,14 +10,18 @@ const AddTodoForm = ({ onAddTodo }) => {
 
   const handleAddTodo = (event) => {
     event.preventDefault()
+    if (todoTitle === "") {
+      return
+    }
     onAddTodo(todoTitle)
-    event.target.reset()
     setTodoTitle("")
   }
 
   return (
     <form onSubmit={handleAddTodo}>
       <InputWithLabel
+        id='todoTitle'
+        value={todoTitle}
         todoTitle={todoTitle}
         handleTitleChange={handleTitleChange}
       >
