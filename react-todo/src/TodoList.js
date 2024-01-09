@@ -6,9 +6,10 @@ function TodoList({ todoList, onRemoveTodo }) {
   return (
     <>
       <ul className={style.todoList}>
-        {todoList.map((todo) => {
+        {todoList.map((todo, index) => {
           return (
             <TodoListItem
+              index={index}
               key={todo.id}
               todo={todo}
               onRemoveTodo={onRemoveTodo}
