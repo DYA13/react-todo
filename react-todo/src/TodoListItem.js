@@ -1,13 +1,21 @@
 import React from "react"
-
-const TodoListItem = ({ todo, onRemoveTodo }) => {
+import style from "./App.module.css"
+import { FcEmptyTrash } from "react-icons/fc"
+const TodoListItem = ({ todo, onRemoveTodo, index }) => {
   return (
     <>
-      <li>
+      <li className={style.listItem}>
         {/* Display the title of the todo */}
+        <span className={style.itemNumber}>{index + 1}</span>
         {todo.title}
-        <button type='button' onClick={() => onRemoveTodo(todo.id)}>
+
+        <button
+          className={style.removeBtn}
+          type='button'
+          onClick={() => onRemoveTodo(todo.id)}
+        >
           Remove
+          <FcEmptyTrash size={25} />
         </button>
       </li>
     </>
