@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import style from "./App.module.css"
 import { FcEmptyTrash } from "react-icons/fc"
 const TodoListItem = ({ todo, onRemoveTodo, index }) => {
@@ -20,6 +21,14 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
       </li>
     </>
   )
+}
+TodoListItem.propTypes = {
+  todo: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired
+  }).isRequired,
+  onRemoveTodo: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired
 }
 
 export default TodoListItem

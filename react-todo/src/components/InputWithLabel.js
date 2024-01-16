@@ -1,6 +1,7 @@
 import React from "react"
-import style from "./App.module.css"
 import PropTypes from "prop-types"
+import style from "./App.module.css"
+
 function InputWithLabel({
   id,
   type = "text",
