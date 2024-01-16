@@ -35,5 +35,8 @@ const AddTodoForm = ({ onAddTodo }) => {
     </form>
   )
 }
+AddTodoForm.propTypes = {
+  onAddTodo: PropTypes.func
+}
 
 export default AddTodoForm
