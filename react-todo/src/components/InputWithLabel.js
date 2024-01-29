@@ -1,11 +1,12 @@
 import React from "react"
+import PropTypes from "prop-types"
 import style from "./App.module.css"
+
 function InputWithLabel({
   id,
   type = "text",
   children,
   value,
-
   handleTitleChange
 }) {
   const inputRef = React.useRef()
@@ -28,5 +29,10 @@ function InputWithLabel({
       />
     </>
   )
+}
+InputWithLabel.propTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  handleTitleChange: PropTypes.func
 }
 export default InputWithLabel
