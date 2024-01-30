@@ -23,7 +23,7 @@ const TodoContainer = () => {
 
     try {
       const response = await fetch(
-        `${airtableUrl}?view=Grid%20view&sort[0][field]=title&sort[0][direction]=${sortOrder}`,
+        `${airtableUrl}?view=Grid%20view&sort[0][field]=createdTime&sort[0][direction]=${sortOrder}`,
         options
       )
 
@@ -60,8 +60,24 @@ const TodoContainer = () => {
       //   return 0
       // })
       const todos = data.records.map((record) => {
-        return { id: record.id, title: record.fields.title }
+        return {
+          id: record.id,
+          title: record.fields.title,
+          createdTime: new Date(record.createdTime)
+        }
       })
+      console.log(
+        "Unsorted Created Time:",
+        todos.map((todo) => todo.createdTime)
+      )
+
+      // Sort in ascending order based on createdTime
+      todos.sort((a, b) => a.createdTime - b.createdTime)
+
+      // If we want descending order, we can reverse the array
+      if (sortOrder === "desc") {
+        todos.reverse()
+      }
 
       setTodoList(todos)
       setLoading(false)
