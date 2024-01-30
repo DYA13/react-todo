@@ -10,6 +10,8 @@ const TodoContainer = () => {
   const airtableToken = process.env.REACT_APP_AIRTABLE_API_TOKEN
 
   const fetchData = async () => {
+    const viewName = "Grid%20view"
+
     const options = {
       method: "GET",
       headers: {
@@ -18,7 +20,7 @@ const TodoContainer = () => {
     }
 
     try {
-      const response = await fetch(airtableUrl, options)
+      const response = await fetch(`${airtableUrl}?view=${viewName}`, options)
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`)
