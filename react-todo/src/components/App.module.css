@@ -30,7 +30,7 @@ body {
     );
   background-size: 55px 55px;
 }
-
+/* TodoListItem */
 .container {
   display: flex;
   flex-direction: column;
@@ -47,6 +47,9 @@ h1 {
   line-height: 72px;
   margin: 0 0 24px;
   font-family: "Great Vibes", cursive;
+}
+.sortBtn {
+  font-size: 30px;
 }
 
 .loading {
