@@ -29,10 +29,36 @@ const TodoContainer = () => {
 
       const data = await response.json()
 
+      // Sorting in descending order
+      // data.records.sort((objectA, objectB) => {
+      //   const titleA = objectA.fields.title.toUpperCase()
+      //   const titleB = objectB.fields.title.toUpperCase()
+
+      //   if (titleA > titleB) {
+      //     return -1
+      //   }
+      //   if (titleA < titleB) {
+      //     return 1
+      //   }
+      //   return 0
+      // })
+      // Sorting in ascending order
+      data.records.sort((objectA, objectB) => {
+        const titleA = objectA.fields.title.toUpperCase()
+        const titleB = objectB.fields.title.toUpperCase()
+
+        if (titleA < titleB) {
+          return -1
+        }
+        if (titleA > titleB) {
+          return 1
+        }
+        return 0
+      })
       const todos = data.records.map((record) => {
         return { id: record.id, title: record.fields.title }
       })
-      console.log(todos)
+
       setTodoList(todos)
       setLoading(false)
     } catch (error) {
