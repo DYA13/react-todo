@@ -10,8 +10,6 @@ const TodoContainer = () => {
   const airtableToken = process.env.REACT_APP_AIRTABLE_API_TOKEN
 
   const fetchData = async () => {
-    const viewName = "Grid%20view"
-
     const options = {
       method: "GET",
       headers: {
@@ -20,7 +18,10 @@ const TodoContainer = () => {
     }
 
     try {
-      const response = await fetch(`${airtableUrl}?view=${viewName}`, options)
+      const response = await fetch(
+        `${airtableUrl}?view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`,
+        options
+      )
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`)
@@ -31,7 +32,7 @@ const TodoContainer = () => {
       const todos = data.records.map((record) => {
         return { id: record.id, title: record.fields.title }
       })
-
+      console.log(todos)
       setTodoList(todos)
       setLoading(false)
     } catch (error) {
@@ -64,6 +65,7 @@ const TodoContainer = () => {
       const todo = await response.json()
       const newTodoItem = { id: todo.id, title: todo.fields.title }
       setTodoList([...todoList, newTodoItem])
+      fetchData()
     } catch (error) {
       console.log(error.message)
       return
