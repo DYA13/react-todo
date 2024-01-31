@@ -66,19 +66,19 @@ const TodoContainer = () => {
           createdTime: new Date(record.createdTime)
         }
       })
-      console.log(
-        "Unsorted Created Time:",
-        todos.map((todo) => todo.createdTime)
-      )
+      // Sort based on title
+      todos.sort((a, b) => {
+        const titleA = a.title.toUpperCase()
+        const titleB = b.title.toUpperCase()
 
-      // Sort in ascending order based on createdTime
-      todos.sort((a, b) => a.createdTime - b.createdTime)
-
-      // If we want descending order, we can reverse the array
-      if (sortOrder === "desc") {
-        todos.reverse()
-      }
-
+        if (titleA < titleB) {
+          return sortOrder === "asc" ? -1 : 1
+        }
+        if (titleA > titleB) {
+          return sortOrder === "asc" ? 1 : -1
+        }
+        return 0
+      })
       setTodoList(todos)
       setLoading(false)
     } catch (error) {
