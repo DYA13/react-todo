@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react"
 import TodoList from "./TodoList"
 import AddTodoForm from "./AddTodoForm"
 import style from "./App.module.css"
-import { AiOutlineSortAscending } from "react-icons/ai"
-import { AiOutlineSortDescending } from "react-icons/ai"
+import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai"
 
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState([])
   const [loading, setLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState("asc")
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
 
   const airtableUrl = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}`
   const airtableToken = process.env.REACT_APP_AIRTABLE_API_TOKEN
@@ -22,10 +23,14 @@ const TodoContainer = () => {
     }
 
     try {
-      const response = await fetch(
-        `${airtableUrl}?view=Grid%20view&sort[0][field]=createdTime&sort[0][direction]=${sortOrder}`,
-        options
-      )
+      let apiUrl = `${airtableUrl}?view=Grid%20view&sort[0][field]=createdTime&sort[0][direction]=${sortOrder}`
+
+      // Add filtering parameters if start and end dates are provided
+      if (startDate && endDate) {
+        apiUrl += `&filterByFormula=AND(createdTime >= '${startDate}T00:00:00Z', createdTime <= '${endDate}T23:59:59Z')`
+      }
+
+      const response = await fetch(apiUrl, options)
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`)
@@ -33,39 +38,12 @@ const TodoContainer = () => {
 
       const data = await response.json()
 
-      // Sorting in descending order
-      // data.records.sort((objectA, objectB) => {
-      //   const titleA = objectA.fields.title.toUpperCase()
-      //   const titleB = objectB.fields.title.toUpperCase()
+      const todos = data.records.map((record) => ({
+        id: record.id,
+        title: record.fields.title,
+        createdTime: new Date(record.createdTime)
+      }))
 
-      //   if (titleA > titleB) {
-      //     return -1
-      //   }
-      //   if (titleA < titleB) {
-      //     return 1
-      //   }
-      //   return 0
-      // })
-      // Sorting in ascending order
-      // data.records.sort((objectA, objectB) => {
-      //   const titleA = objectA.fields.title.toUpperCase()
-      //   const titleB = objectB.fields.title.toUpperCase()
-
-      //   if (titleA < titleB) {
-      //     return -1
-      //   }
-      //   if (titleA > titleB) {
-      //     return 1
-      //   }
-      //   return 0
-      // })
-      const todos = data.records.map((record) => {
-        return {
-          id: record.id,
-          title: record.fields.title,
-          createdTime: new Date(record.createdTime)
-        }
-      })
       // Sort based on title
       todos.sort((a, b) => {
         const titleA = a.title.toUpperCase()
@@ -79,12 +57,14 @@ const TodoContainer = () => {
         }
         return 0
       })
+
       setTodoList(todos)
       setLoading(false)
     } catch (error) {
       console.error("Error fetching data:", error.message)
     }
   }
+
   const toggleSortOrder = () => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc"
     setSortOrder(newSortOrder)
@@ -151,6 +131,18 @@ const TodoContainer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortOrder])
 
+  const handleStartDateChange = (date) => {
+    setStartDate(date)
+  }
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date)
+  }
+
+  const fetchDataWithFilter = () => {
+    fetchData()
+  }
+
   return (
     <>
       <h1 className={style.h1}>Todo List</h1>
@@ -160,6 +152,23 @@ const TodoContainer = () => {
         <p className={style.loading}>Loading ...</p>
       ) : (
         <div className={style.container}>
+          <div className={style.filterContainer}>
+            <label>Filter by Date: </label>
+            <input
+              type='date'
+              value={startDate || ""}
+              onChange={(e) => handleStartDateChange(e.target.value)}
+            />
+            <span> to </span>
+            <input
+              type='date'
+              value={endDate || ""}
+              onChange={(e) => handleEndDateChange(e.target.value)}
+            />
+            <button className={style.filterBtn} onClick={fetchDataWithFilter}>
+              Apply Filter
+            </button>
+          </div>
           <button className={style.sortBtn} onClick={toggleSortOrder}>
             {sortOrder === "asc" ? (
               <AiOutlineSortAscending />
