@@ -16,16 +16,17 @@ function InputWithLabel({
   })
   return (
     <>
-      <label className={style.label} htmlFor={id}>
+      <label className={style.inputTitleText} htmlFor={id}>
         {children}{" "}
       </label>
       <input
-        className={style.input}
+        className={style.inputTitle}
         id={id}
         type={type}
         value={value}
         onChange={handleTitleChange}
         ref={inputRef}
+        placeholder='Add your task'
       />
     </>
   )

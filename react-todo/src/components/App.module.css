@@ -30,26 +30,101 @@ body {
     );
   background-size: 55px 55px;
 }
-/* TodoListItem */
+/* TodoContainer */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.containerSortFilter {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+.sortFilterContainer {
+  display: flex;
+  align-items: center;
+}
+
+.sortContainer {
+  margin-right: 10px;
+}
+
+.sortAsc {
+  color: green;
+}
+
+.sortDesc {
+  color: red;
+}
+
+.divider {
+  height: 34px;
+  width: 3px;
+  background-color: #aca2a2;
+  margin: 0 10px;
+}
 
 h1 {
-  font-size: 45px;
+  font-size: 30px;
   font-weight: bold;
   color: #d54d7b;
-  text-shadow: 0 1px 1px #fff;
   text-align: center;
   text-transform: uppercase;
-  line-height: 72px;
-  margin: 0 0 24px;
   font-family: "Great Vibes", cursive;
+  margin-bottom: 24px;
 }
 .sortBtn {
-  font-size: 30px;
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #d54d7b;
+  }
+}
+.filterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+label {
+  margin-right: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.dateInput {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+  font-size: 0.9rem;
+}
+
+.spanFilter {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.filterBtn {
+  padding: 8px 12px;
+  background-color: #e8d7e9;
+  color: #100f0f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, color 0.3s;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #7e0f6f;
+  }
 }
 
 .loading {
@@ -178,30 +253,28 @@ h1 {
 
 /* InputWithLabel */
 
-.label {
-  font-size: 25px;
+.inputTitleText {
   font-family: "Libre Baskerville", serif;
   text-transform: uppercase;
-  color: #333;
-  font-style: italic;
+  color: #4a524c;
   line-height: 45px;
   text-shadow: 0 1px 1px #fff;
   padding: 10px;
 }
 
-.input {
-  background-color: #e3dada;
-  border-radius: 10px 0 0 10px;
+.inputTitle {
+  background-color: #d1caca;
+  border-radius: 5px 0 0 5px;
   border: none;
-  width: 400px;
-
-  color: rgb(18, 17, 17);
-  font-size: 20px;
+  color: rgb(38, 27, 27);
+  font-size: 23px;
   font-family: "Libre Baskerville", serif;
-  padding: 0.5em 1em;
+  padding: 9px;
+  width: 30%;
 }
 ::placeholder {
-  color: rgb(184, 184, 184);
+  color: rgb(47, 46, 46);
+  font-size: 23px;
 }
 
 /* AddTodoForm */
@@ -213,12 +286,13 @@ h1 {
 }
 .addBtn {
   font-size: 20px;
-  padding: 0.5em 1em;
+  padding: 9px 15px;
   border: transparent;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24);
   background: #f4e8e8;
   border-radius: 0 10px 10px 0;
   transition: 0.3s;
+  text-transform: uppercase;
 }
 
 .addBtn:hover {
@@ -252,16 +326,9 @@ h1 {
     line-height: 40px;
     margin: 10px;
   }
-  .label {
-    font-size: 13px;
-  }
+
   .loading {
     font-size: 1rem;
-  }
-
-  .input {
-    width: 200px;
-    font-size: 12px;
   }
 
   .addBtn {
@@ -269,9 +336,6 @@ h1 {
   }
   .listItem {
     font-size: 20px;
-  }
-  .label {
-    font-size: 16px;
   }
 
   .removeBtn {
@@ -290,19 +354,11 @@ h1 {
   .loading {
     font-size: 1.2rem;
   }
-  .input {
-    width: 40%;
-    max-width: 40%;
-    font-size: 14px;
-  }
+
   .addBtn {
-    width: 20%;
-    max-width: 20%;
     font-size: 14px;
   }
-  .label {
-    font-size: 18px;
-  }
+
   .removeBtn {
     font-size: 16px;
     margin: 0 10px;
@@ -323,14 +379,7 @@ h1 {
     font-size: 1.5rem;
   }
 
-  .input {
-    width: 40%;
-    max-width: 40%;
-    font-size: 15px;
-  }
   .addBtn {
-    width: 20%;
-    max-width: 20%;
     font-size: 15px;
   }
 }

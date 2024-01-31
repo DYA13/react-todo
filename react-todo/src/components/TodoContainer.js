@@ -145,37 +145,51 @@ const TodoContainer = () => {
 
   return (
     <>
-      <h1 className={style.h1}>Todo List</h1>
+      <h1 className={style.h1}>To Do List</h1>
 
       <AddTodoForm onAddTodo={addTodo} />
       {loading ? (
         <p className={style.loading}>Loading ...</p>
       ) : (
         <div className={style.container}>
-          <div className={style.filterContainer}>
-            <label>Filter by Date: </label>
-            <input
-              type='date'
-              value={startDate || ""}
-              onChange={(e) => handleStartDateChange(e.target.value)}
-            />
-            <span> to </span>
-            <input
-              type='date'
-              value={endDate || ""}
-              onChange={(e) => handleEndDateChange(e.target.value)}
-            />
-            <button className={style.filterBtn} onClick={fetchDataWithFilter}>
-              Apply Filter
-            </button>
+          <div className={style.containerSortFilter}>
+            {/* Sorting */}
+            <div
+              className={`${style.sortContainer} ${
+                sortOrder === "asc" ? style.sortAsc : style.sortDesc
+              }`}
+            >
+              <button className={style.sortBtn} onClick={toggleSortOrder}>
+                {sortOrder === "asc" ? (
+                  <AiOutlineSortAscending />
+                ) : (
+                  <AiOutlineSortDescending />
+                )}
+              </button>
+            </div>
+            {/* Divider Line */}
+            <div className={style.divider}></div>
+            {/* Filtering */}
+            <div className={style.filterContainer}>
+              <label className={style.labelFilter}>Filter by Date: </label>
+              <input
+                className={style.dateInput}
+                type='date'
+                value={startDate || ""}
+                onChange={(e) => handleStartDateChange(e.target.value)}
+              />
+              <span className={style.spanFilter}> to</span>
+              <input
+                className={style.dateInput}
+                type='date'
+                value={endDate || ""}
+                onChange={(e) => handleEndDateChange(e.target.value)}
+              />
+              <button className={style.filterBtn} onClick={fetchDataWithFilter}>
+                Apply
+              </button>
+            </div>
           </div>
-          <button className={style.sortBtn} onClick={toggleSortOrder}>
-            {sortOrder === "asc" ? (
-              <AiOutlineSortAscending />
-            ) : (
-              <AiOutlineSortDescending />
-            )}
-          </button>
           <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
         </div>
       )}
