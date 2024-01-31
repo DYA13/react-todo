@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import style from "./App.module.css"
-import { FcEmptyTrash } from "react-icons/fc"
+import { TiDeleteOutline } from "react-icons/ti"
+
 const TodoListItem = ({ todo, onRemoveTodo, index }) => {
   return (
     <>
@@ -15,8 +16,7 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
           type='button'
           onClick={() => onRemoveTodo(todo.id)}
         >
-          Remove
-          <FcEmptyTrash size={25} />
+          <TiDeleteOutline size={25} />
         </button>
       </li>
     </>
