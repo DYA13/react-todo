@@ -9,7 +9,7 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
       <li className={style.listItem}>
         {/* Display the title of the todo */}
         <span className={style.itemNumber}>{index + 1}</span>
-        {todo.title}
+        <p className={style.card__content}> {todo.title}</p>
 
         <button
           className={style.removeBtn}

@@ -169,10 +169,16 @@ label {
   }
 }
 /* TodoList */
+
+.todolistContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25px;
+}
 .todoList {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   list-style-type: none;
   color: #7a7c7f;
   font-size: 29px;
@@ -184,18 +190,36 @@ label {
   padding: 0;
 }
 /* TodoListItem */
+
 .itemNumber {
   margin-right: 10px;
   color: #d54d7b;
-  font-weight: bold;
 }
 .listItem {
   display: flex;
   align-items: center;
   margin: 8px;
+  --border-radius: 0.75rem;
+  --primary-color: #7257fa;
+  --secondary-color: #3c3852;
+  width: 210px;
+  font-family: "Arial";
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  background: #efbfec;
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  position: relative;
+  width: 210px;
+  margin: 10px;
 }
+.card__content {
+  color: var(--secondary-color);
+  font-size: 20px;
+  line-height: 1.2em;
+}
+
 .removeBtn {
-  display: inline-block;
   padding: 3px 7px;
   border: 1px solid #4f4f4f;
   border-radius: 4px;
@@ -203,10 +227,17 @@ label {
   position: relative;
   overflow: hidden;
   font-size: 19px;
-  cursor: pointer;
+
   color: black;
   z-index: 1;
   margin: 0 18px;
+  position: absolute;
+  background: #66c371;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  bottom: 0;
+  right: 0;
+  transition: 0.2s;
 }
 .removeBtn:before {
   content: "";
@@ -333,9 +364,6 @@ label {
 
   .addBtn {
     font-size: 12px;
-  }
-  .listItem {
-    font-size: 20px;
   }
 
   .removeBtn {

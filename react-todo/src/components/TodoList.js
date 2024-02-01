@@ -5,7 +5,7 @@ import style from "./App.module.css"
 
 function TodoList({ todoList, onRemoveTodo }) {
   return (
-    <>
+    <div className={style.todolistContainer}>
       <ul className={style.todoList}>
         {todoList.map((todo, index) => {
           return (
@@ -18,7 +18,7 @@ function TodoList({ todoList, onRemoveTodo }) {
           )
         })}
       </ul>
-    </>
+    </div>
   )
 }
 TodoList.propTypes = {
