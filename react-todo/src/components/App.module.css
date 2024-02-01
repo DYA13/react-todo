@@ -192,31 +192,35 @@ label {
 /* TodoListItem */
 
 .itemNumber {
-  margin-right: 10px;
+  padding: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
   color: #d54d7b;
 }
 .listItem {
-  display: flex;
-  align-items: center;
-  margin: 8px;
   --border-radius: 0.75rem;
   --primary-color: #7257fa;
   --secondary-color: #3c3852;
-  width: 210px;
+  width: 200px;
+  height: 200px;
   font-family: "Arial";
   padding: 1rem;
   cursor: pointer;
   border-radius: var(--border-radius);
-  background: #efbfec;
+  background: #dd9ee8;
   box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
   position: relative;
-  width: 210px;
-  margin: 10px;
+  margin: 20px;
 }
 .card__content {
   color: var(--secondary-color);
   font-size: 20px;
-  line-height: 1.2em;
+  line-height: 1em;
+}
+.createdTime {
+  color: #6e6b80;
+  font-size: 0.9rem;
+  line-height: 1em;
 }
 
 .removeBtn {
@@ -224,10 +228,8 @@ label {
   border: 1px solid #4f4f4f;
   border-radius: 4px;
   transition: all 0.2s ease-in;
-  position: relative;
   overflow: hidden;
   font-size: 19px;
-
   color: black;
   z-index: 1;
   margin: 0 18px;
@@ -235,7 +237,7 @@ label {
   background: #66c371;
   border-top-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
-  bottom: 0;
+  bottom: 5px;
   right: 0;
   transition: 0.2s;
 }

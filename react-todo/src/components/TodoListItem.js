@@ -5,12 +5,15 @@ import { TiDeleteOutline } from "react-icons/ti"
 
 const TodoListItem = ({ todo, onRemoveTodo, index }) => {
   return (
-    <>
+    <div className={style.card}>
       <li className={style.listItem}>
         {/* Display the title of the todo */}
         <span className={style.itemNumber}>{index + 1}</span>
         <p className={style.card__content}> {todo.title}</p>
-
+        {/* Display the creation time */}
+        <p className={style.createdTime}>
+          Created at: {todo.createdTime.toLocaleString()}
+        </p>
         <button
           className={style.removeBtn}
           type='button'
@@ -19,7 +22,7 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
           <TiDeleteOutline size={25} />
         </button>
       </li>
-    </>
+    </div>
   )
 }
 TodoListItem.propTypes = {
