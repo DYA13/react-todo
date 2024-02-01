@@ -4,12 +4,15 @@ import style from "./App.module.css"
 import { TiDeleteOutline } from "react-icons/ti"
 
 const TodoListItem = ({ todo, onRemoveTodo, index }) => {
+  console.log("Todo:", todo)
   return (
     <div className={style.card}>
       <li className={style.listItem}>
         {/* Display the title of the todo */}
         <span className={style.itemNumber}>{index + 1}</span>
-        <p className={style.card__content}> {todo.title}</p>
+        <p className={style.card__content}>{todo.title}</p>
+        {/* Display the status */}
+        {todo.status && <p className={style.status}>Status: {todo.status}</p>}
         {/* Display the creation time */}
         <p className={style.createdTime}>
           Created at: {todo.createdTime.toLocaleString()}
@@ -25,10 +28,12 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
     </div>
   )
 }
+
 TodoListItem.propTypes = {
   todo: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    status: PropTypes.string // Add the status prop type
   }).isRequired,
   onRemoveTodo: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired

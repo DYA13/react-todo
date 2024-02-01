@@ -41,7 +41,8 @@ const TodoContainer = () => {
       const todos = data.records.map((record) => ({
         id: record.id,
         title: record.fields.title,
-        createdTime: new Date(record.createdTime)
+        createdTime: new Date(record.createdTime),
+        status: record.fields.status
       }))
 
       // Sort based on title

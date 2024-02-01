@@ -201,8 +201,8 @@ label {
   --border-radius: 0.75rem;
   --primary-color: #7257fa;
   --secondary-color: #3c3852;
-  width: 200px;
-  height: 200px;
+  width: 230px;
+  height: 230px;
   font-family: "Arial";
   padding: 1rem;
   cursor: pointer;
@@ -216,6 +216,11 @@ label {
   color: var(--secondary-color);
   font-size: 20px;
   line-height: 1em;
+  margin: 0;
+}
+.status {
+  font-size: 0.9rem;
+  color: #0d3fc9;
 }
 .createdTime {
   color: #6e6b80;
