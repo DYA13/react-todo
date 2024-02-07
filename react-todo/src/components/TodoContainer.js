@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import TodoList from "./TodoList"
 import AddTodoForm from "./AddTodoForm"
 import style from "./App.module.css"
+import Select from "react-select"
 import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai"
 
 const TodoContainer = () => {
@@ -10,6 +11,7 @@ const TodoContainer = () => {
   const [sortOrder, setSortOrder] = useState("asc")
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState([])
 
   const airtableUrl = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}`
   const airtableToken = process.env.REACT_APP_AIRTABLE_API_TOKEN
@@ -25,9 +27,17 @@ const TodoContainer = () => {
     try {
       let apiUrl = `${airtableUrl}?view=Grid%20view&sort[0][field]=createdTime&sort[0][direction]=${sortOrder}`
 
-      // Add filtering parameters if start and end dates are provided
+      // Add filtering parameters for start and end dates
       if (startDate && endDate) {
         apiUrl += `&filterByFormula=AND(createdTime >= '${startDate}T00:00:00Z', createdTime <= '${endDate}T23:59:59Z')`
+      }
+
+      // Add filtering parameters for selected status options
+      if (selectedStatusOptions.length > 0) {
+        const statusFilter = selectedStatusOptions
+          .map((status) => `{status} = '${status.value}'`)
+          .join(",")
+        apiUrl += `&filterByFormula=AND(${statusFilter})`
       }
 
       const response = await fetch(apiUrl, options)
@@ -35,7 +45,6 @@ const TodoContainer = () => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`)
       }
-
       const data = await response.json()
 
       const todos = data.records.map((record) => ({
@@ -47,8 +56,8 @@ const TodoContainer = () => {
 
       // Sort based on title
       todos.sort((a, b) => {
-        const titleA = a.title.toUpperCase()
-        const titleB = b.title.toUpperCase()
+        const titleA = a.title
+        const titleB = b.title
 
         if (titleA < titleB) {
           return sortOrder === "asc" ? -1 : 1
@@ -56,7 +65,7 @@ const TodoContainer = () => {
         if (titleA > titleB) {
           return sortOrder === "asc" ? 1 : -1
         }
-        return 0
+        return titleA.localeCompare(titleB) * (sortOrder === "asc" ? 1 : -1)
       })
 
       setTodoList(todos)
@@ -72,18 +81,20 @@ const TodoContainer = () => {
   }
 
   const addTodo = async (newTodo) => {
-    const title = {
+    const todoData = {
       fields: {
-        title: newTodo
+        title: newTodo,
+        status: selectedStatusOptions[1]?.value
       }
     }
+
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${airtableToken}`
       },
-      body: JSON.stringify(title)
+      body: JSON.stringify(todoData)
     }
 
     try {
@@ -94,11 +105,19 @@ const TodoContainer = () => {
       }
 
       const todo = await response.json()
-      const newTodoItem = { id: todo.id, title: todo.fields.title }
+
+      const newTodoItem = {
+        id: todo.id,
+        title: todo.fields.title,
+        status: todo.fields.status
+      }
+
       setTodoList([...todoList, newTodoItem])
+
       fetchData()
     } catch (error) {
-      console.log(error.message)
+      console.log("Caught an error:", error.message)
+
       return
     }
   }
@@ -144,6 +163,10 @@ const TodoContainer = () => {
     fetchData()
   }
 
+  const handleStatusChange = (selectedOptions) => {
+    setSelectedStatusOptions(selectedOptions)
+  }
+
   return (
     <>
       <h1 className={style.h1}>To Do List</h1>
@@ -170,7 +193,8 @@ const TodoContainer = () => {
             </div>
             {/* Divider Line */}
             <div className={style.divider}></div>
-            {/* Filtering */}
+
+            {/* Filtering by date*/}
             <div className={style.filterContainer}>
               <label className={style.labelFilter}>Filter by Date: </label>
               <input
@@ -185,6 +209,25 @@ const TodoContainer = () => {
                 type='date'
                 value={endDate || ""}
                 onChange={(e) => handleEndDateChange(e.target.value)}
+              />
+              <button className={style.filterBtn} onClick={fetchDataWithFilter}>
+                Apply
+              </button>
+            </div>
+            {/* Divider Line */}
+            <div className={style.divider}></div>
+            <div className={style.filterContainer}>
+              {/* Existing code... */}
+              <label className={style.labelFilter}>Filter by Status: </label>
+              <Select
+                isMulti
+                options={[
+                  { value: "in progress", label: "in progress" },
+                  { value: "completed", label: "completed" },
+                  { value: "start work", label: "start work" }
+                ]}
+                value={selectedStatusOptions}
+                onChange={handleStatusChange}
               />
               <button className={style.filterBtn} onClick={fetchDataWithFilter}>
                 Apply

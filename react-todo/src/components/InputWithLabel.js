@@ -33,7 +33,8 @@ function InputWithLabel({
 }
 InputWithLabel.propTypes = {
   id: PropTypes.string.isRequired,
-  type: PropTypes.string,
+  value: PropTypes.string,
+  todoTitle: PropTypes.string,
   handleTitleChange: PropTypes.func
 }
 export default InputWithLabel

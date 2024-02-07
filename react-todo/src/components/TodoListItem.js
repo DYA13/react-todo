@@ -4,7 +4,6 @@ import style from "./App.module.css"
 import { TiDeleteOutline } from "react-icons/ti"
 
 const TodoListItem = ({ todo, onRemoveTodo, index }) => {
-  console.log("Todo:", todo)
   return (
     <div className={style.card}>
       <li className={style.listItem}>
@@ -13,10 +12,12 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
         <p className={style.card__content}>{todo.title}</p>
         {/* Display the status */}
         {todo.status && <p className={style.status}>Status: {todo.status}</p>}
-        {/* Display the creation time */}
-        <p className={style.createdTime}>
-          Created at: {todo.createdTime.toLocaleString()}
-        </p>
+        {/* Display the creation time if it's defined */}
+        {todo.createdTime && (
+          <p className={style.createdTime}>
+            Created at: {todo.createdTime.toLocaleString()}
+          </p>
+        )}
         <button
           className={style.removeBtn}
           type='button'
@@ -31,10 +32,11 @@ const TodoListItem = ({ todo, onRemoveTodo, index }) => {
 
 TodoListItem.propTypes = {
   todo: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    status: PropTypes.string // Add the status prop type
-  }).isRequired,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    status: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    createdTime: PropTypes.instanceOf(Date) // Assuming createdTime is a Date object
+  }),
   onRemoveTodo: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired
 }
