@@ -208,6 +208,7 @@ const TodoContainer = () => {
                 selected={startDate}
                 onChange={handleStartDateChange}
                 dateFormat='yyyy-MM-dd'
+                placeholderText='Start Date'
               />
               <span className={style.spanFilter}> to</span>
               <ReactDatePicker
@@ -215,6 +216,7 @@ const TodoContainer = () => {
                 selected={endDate}
                 onChange={handleEndDateChange}
                 dateFormat='yyyy-MM-dd'
+                placeholderText='End Date'
               />
 
               <button className={style.filterBtn} onClick={fetchDataWithFilter}>
