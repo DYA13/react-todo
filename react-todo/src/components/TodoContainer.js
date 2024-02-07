@@ -4,6 +4,8 @@ import AddTodoForm from "./AddTodoForm"
 import style from "./App.module.css"
 import Select from "react-select"
 import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai"
+import ReactDatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 const TodoContainer = () => {
   const [todoList, setTodoList] = useState([])
@@ -28,8 +30,12 @@ const TodoContainer = () => {
       let apiUrl = `${airtableUrl}?view=Grid%20view&sort[0][field]=createdTime&sort[0][direction]=${sortOrder}`
 
       // Add filtering parameters for start and end dates
+      // Add filtering parameters for start and end dates
       if (startDate && endDate) {
-        apiUrl += `&filterByFormula=AND(createdTime >= '${startDate}T00:00:00Z', createdTime <= '${endDate}T23:59:59Z')`
+        const formattedStartDate = startDate.toISOString()
+        const formattedEndDate = endDate.toISOString()
+
+        apiUrl += `&filterByFormula=AND(DATETIME_FORMAT(DATEADD(createdTime, -7, 'hours'), 'YYYY-MM-DD') >= '${formattedStartDate}', DATETIME_FORMAT(DATEADD(createdTime, -7, 'hours'), 'YYYY-MM-DD') <= '${formattedEndDate}')`
       }
 
       // Add filtering parameters for selected status options
@@ -197,19 +203,20 @@ const TodoContainer = () => {
             {/* Filtering by date*/}
             <div className={style.filterContainer}>
               <label className={style.labelFilter}>Filter by Date: </label>
-              <input
+              <ReactDatePicker
                 className={style.dateInput}
-                type='date'
-                value={startDate || ""}
-                onChange={(e) => handleStartDateChange(e.target.value)}
+                selected={startDate}
+                onChange={handleStartDateChange}
+                dateFormat='yyyy-MM-dd'
               />
               <span className={style.spanFilter}> to</span>
-              <input
+              <ReactDatePicker
                 className={style.dateInput}
-                type='date'
-                value={endDate || ""}
-                onChange={(e) => handleEndDateChange(e.target.value)}
+                selected={endDate}
+                onChange={handleEndDateChange}
+                dateFormat='yyyy-MM-dd'
               />
+
               <button className={style.filterBtn} onClick={fetchDataWithFilter}>
                 Apply
               </button>
