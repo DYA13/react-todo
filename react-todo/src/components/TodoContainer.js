@@ -28,22 +28,30 @@ const TodoContainer = () => {
 
     try {
       let apiUrl = `${airtableUrl}?view=Grid%20view&sort[0][field]=createdTime&sort[0][direction]=${sortOrder}`
+      // Combine filtering parameters for start and end dates and selected status options
+      const filters = []
 
-      // Add filtering parameters for start and end dates
       // Add filtering parameters for start and end dates
       if (startDate && endDate) {
         const formattedStartDate = startDate.toISOString()
         const formattedEndDate = endDate.toISOString()
-
-        apiUrl += `&filterByFormula=AND(DATETIME_FORMAT(DATEADD(createdTime, -7, 'hours'), 'YYYY-MM-DD') >= '${formattedStartDate}', DATETIME_FORMAT(DATEADD(createdTime, -7, 'hours'), 'YYYY-MM-DD') <= '${formattedEndDate}')`
+        filters.push(
+          `DATETIME_FORMAT(DATEADD(createdTime, -7, 'hours'), 'YYYY-MM-DD') >= '${formattedStartDate}'`
+        )
+        filters.push(
+          `DATETIME_FORMAT(DATEADD(createdTime, -7, 'hours'), 'YYYY-MM-DD') <= '${formattedEndDate}'`
+        )
       }
 
-      // Add filtering parameters for selected status options
       if (selectedStatusOptions.length > 0) {
         const statusFilter = selectedStatusOptions
           .map((status) => `{status} = '${status.value}'`)
           .join(",")
-        apiUrl += `&filterByFormula=AND(${statusFilter})`
+        filters.push(`(${statusFilter})`)
+      }
+
+      if (filters.length > 0) {
+        apiUrl += `&filterByFormula=AND(${filters.join(",")})`
       }
 
       const response = await fetch(apiUrl, options)
