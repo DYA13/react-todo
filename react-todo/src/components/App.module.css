@@ -69,6 +69,21 @@ body {
   font-style: italic;
   font-size: 15px;
 }
+.selectFilter {
+  width: 200px;
+}
+
+.selectFilter__menu {
+  max-height: 200px;
+}
+
+.selectFilter__option {
+  padding: 8px;
+}
+
+.selectFilter__single-value {
+  font-size: 14px;
+}
 
 h1 {
   font-size: 30px;

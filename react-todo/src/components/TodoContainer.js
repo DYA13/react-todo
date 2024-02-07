@@ -237,6 +237,7 @@ const TodoContainer = () => {
               {/* Existing code... */}
               <label className={style.labelFilter}>Filter by Status: </label>
               <Select
+                className={style.selectFilter}
                 isMulti
                 options={[
                   { value: "in progress", label: "in progress" },
