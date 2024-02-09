@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path='/' element={<TodoContainer />} />
         <Route
-          path='/new'
+          path='/chart'
           element={
             <>
               <Chart />

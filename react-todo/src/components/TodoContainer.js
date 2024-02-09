@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import TodoList from "./TodoList"
 import AddTodoForm from "./AddTodoForm"
+import { Link } from "react-router-dom"
 import style from "./App.module.css"
 import Select from "react-select"
 import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai"
@@ -184,7 +185,7 @@ const TodoContainer = () => {
   return (
     <>
       <h1 className={style.h1}>To Do List</h1>
-
+      <Link to='/chart'>Go to Chart</Link>
       <AddTodoForm onAddTodo={addTodo} />
       {loading ? (
         <p className={style.loading}>Loading ...</p>
