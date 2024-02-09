@@ -50,7 +50,9 @@ const Chart = () => {
 
   return (
     <>
-      <Link to='/'>Go to Home</Link>
+      <Link className={style.link} to='/'>
+        Back to main page
+      </Link>
       {loading ? (
         <p className={style.loading}>Loading ...</p>
       ) : (

@@ -184,8 +184,11 @@ const TodoContainer = () => {
 
   return (
     <>
-      <h1 className={style.h1}>To Do List</h1>
-      <Link to='/chart'>Go to Chart</Link>
+      <Link className={style.link} to='/chart'>
+        Chart on status
+      </Link>
+      <h1 className={style.h1}>Task manager</h1>
+
       <AddTodoForm onAddTodo={addTodo} />
       {loading ? (
         <p className={style.loading}>Loading ...</p>
