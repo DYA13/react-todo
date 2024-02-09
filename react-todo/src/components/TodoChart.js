@@ -31,9 +31,9 @@ const TodoChart = ({ todoList }) => {
           {
             data,
             backgroundColor: [
-              "rgba(255, 99, 132, 0.5)", // Bright pink
-              "rgba(75, 192, 192, 0.5)", // Bright teal
-              "rgba(255, 205, 86, 0.5)" // Bright yellow
+              "rgba(255, 99, 132, 0.5)",
+              "rgba(75, 192, 192, 0.5)",
+              "rgba(255, 205, 86, 0.5)"
             ],
             borderColor: [
               "rgba(255, 99, 132, 1)",
@@ -45,7 +45,7 @@ const TodoChart = ({ todoList }) => {
         ]
       },
       options: {
-        cutout: "40%" // Set the cutout percentage to make it smaller
+        cutout: "40%"
       }
     })
   }, [todoList])

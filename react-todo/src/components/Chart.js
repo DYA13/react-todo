@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import style from "./App.module.css"
+import { Link } from "react-router-dom"
 import "react-datepicker/dist/react-datepicker.css"
 import TodoChart from "./TodoChart"
 
@@ -49,6 +50,7 @@ const Chart = () => {
 
   return (
     <>
+      <Link to='/'>Go to Home</Link>
       {loading ? (
         <p className={style.loading}>Loading ...</p>
       ) : (
