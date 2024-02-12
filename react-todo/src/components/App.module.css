@@ -30,23 +30,134 @@ body {
     );
   background-size: 55px 55px;
 }
-
+/* TodoContainer */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.containerSortFilter {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+.sortFilterContainer {
+  display: flex;
+  align-items: center;
+}
+
+.sortContainer {
+  margin-right: 10px;
+}
+.link {
+  color: #007bff;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+  display: inline-block;
+  margin: 20px;
+}
+
+.link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+.sortAsc {
+  color: green;
+}
+
+.sortDesc {
+  color: red;
+}
+
+.divider {
+  height: 34px;
+  width: 3px;
+  background-color: #aca2a2;
+  margin: 0 10px;
+}
+.dateInput::placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: 15px;
+}
+.selectFilter {
+  width: 200px;
+}
+
+.selectFilter__menu {
+  max-height: 200px;
+}
+
+.selectFilter__option {
+  padding: 8px;
+}
+
+.selectFilter__single-value {
+  font-size: 14px;
+}
 
 h1 {
-  font-size: 45px;
+  font-size: 30px;
   font-weight: bold;
   color: #d54d7b;
-  text-shadow: 0 1px 1px #fff;
   text-align: center;
   text-transform: uppercase;
-  line-height: 72px;
-  margin: 0 0 24px;
   font-family: "Great Vibes", cursive;
+  margin-bottom: 24px;
+}
+.sortBtn {
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #d54d7b;
+  }
+}
+.filterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+label {
+  margin-right: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.dateInput {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+  font-size: 0.9rem;
+}
+
+.spanFilter {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.filterBtn {
+  padding: 8px 12px;
+  background-color: #e8d7e9;
+  color: #100f0f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, color 0.3s;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #7e0f6f;
+  }
 }
 
 .loading {
@@ -91,10 +202,16 @@ h1 {
   }
 }
 /* TodoList */
+
+.todolistContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25px;
+}
 .todoList {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   list-style-type: none;
   color: #7a7c7f;
   font-size: 29px;
@@ -106,29 +223,61 @@ h1 {
   padding: 0;
 }
 /* TodoListItem */
+
 .itemNumber {
-  margin-right: 10px;
-  color: #d54d7b;
+  padding: 0;
+  font-size: 1.3rem;
   font-weight: bold;
+  color: #d54d7b;
 }
 .listItem {
-  display: flex;
-  align-items: center;
-  margin: 8px;
+  --border-radius: 0.75rem;
+  --primary-color: #7257fa;
+  --secondary-color: #3c3852;
+  width: 230px;
+  height: 230px;
+  font-family: "Arial";
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  background: #dd9ee8;
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  position: relative;
+  margin: 20px;
 }
+.card__content {
+  color: var(--secondary-color);
+  font-size: 20px;
+  line-height: 1em;
+  margin: 0;
+}
+.status {
+  font-size: 0.9rem;
+  color: #0d3fc9;
+}
+.createdTime {
+  color: #6e6b80;
+  font-size: 0.9rem;
+  line-height: 1em;
+}
+
 .removeBtn {
-  display: inline-block;
   padding: 3px 7px;
   border: 1px solid #4f4f4f;
   border-radius: 4px;
   transition: all 0.2s ease-in;
-  position: relative;
   overflow: hidden;
   font-size: 19px;
-  cursor: pointer;
   color: black;
   z-index: 1;
   margin: 0 18px;
+  position: absolute;
+  background: #66c371;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  bottom: 5px;
+  right: 0;
+  transition: 0.2s;
 }
 .removeBtn:before {
   content: "";
@@ -175,30 +324,28 @@ h1 {
 
 /* InputWithLabel */
 
-.label {
-  font-size: 25px;
+.inputTitleText {
   font-family: "Libre Baskerville", serif;
   text-transform: uppercase;
-  color: #333;
-  font-style: italic;
+  color: #4a524c;
   line-height: 45px;
   text-shadow: 0 1px 1px #fff;
   padding: 10px;
 }
 
-.input {
-  background-color: #e3dada;
-  border-radius: 10px 0 0 10px;
+.inputTitle {
+  background-color: #d1caca;
+  border-radius: 5px 0 0 5px;
   border: none;
-  width: 400px;
-
-  color: rgb(18, 17, 17);
-  font-size: 20px;
+  color: rgb(38, 27, 27);
+  font-size: 23px;
   font-family: "Libre Baskerville", serif;
-  padding: 0.5em 1em;
+  padding: 9px;
+  width: 30%;
 }
 ::placeholder {
-  color: rgb(184, 184, 184);
+  color: rgb(47, 46, 46);
+  font-size: 23px;
 }
 
 /* AddTodoForm */
@@ -210,12 +357,13 @@ h1 {
 }
 .addBtn {
   font-size: 20px;
-  padding: 0.5em 1em;
+  padding: 9px 15px;
   border: transparent;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24);
   background: #f4e8e8;
   border-radius: 0 10px 10px 0;
   transition: 0.3s;
+  text-transform: uppercase;
 }
 
 .addBtn:hover {
@@ -249,32 +397,20 @@ h1 {
     line-height: 40px;
     margin: 10px;
   }
-  .label {
-    font-size: 13px;
-  }
+
   .loading {
     font-size: 1rem;
   }
 
-  .input {
-    width: 200px;
-    font-size: 12px;
-  }
-
   .addBtn {
     font-size: 12px;
-  }
-  .listItem {
-    font-size: 20px;
-  }
-  .label {
-    font-size: 16px;
   }
 
   .removeBtn {
     font-size: 12px;
     margin: 0 8px;
     padding: 0 8px;
+    border: none;
   }
 }
 
@@ -287,19 +423,11 @@ h1 {
   .loading {
     font-size: 1.2rem;
   }
-  .input {
-    width: 40%;
-    max-width: 40%;
-    font-size: 14px;
-  }
+
   .addBtn {
-    width: 20%;
-    max-width: 20%;
     font-size: 14px;
   }
-  .label {
-    font-size: 18px;
-  }
+
   .removeBtn {
     font-size: 16px;
     margin: 0 10px;
@@ -320,14 +448,7 @@ h1 {
     font-size: 1.5rem;
   }
 
-  .input {
-    width: 40%;
-    max-width: 40%;
-    font-size: 15px;
-  }
   .addBtn {
-    width: 20%;
-    max-width: 20%;
     font-size: 15px;
   }
 }
