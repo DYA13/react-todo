@@ -429,7 +429,9 @@ label {
   .divider {
     display: none;
   }
-
+  .todoList {
+    width: 300px;
+  }
   .addBtn {
     font-size: 12px;
   }
@@ -478,5 +480,25 @@ label {
 
   .addBtn {
     font-size: 15px;
+  }
+  .inputTitle {
+    font-size: 20px;
+    width: 400px;
+  }
+  ::placeholder {
+    font-size: 20px;
+  }
+  .containerSortFilter {
+    width: 500px;
+    margin: 20px;
+  }
+  .todoList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    margin: 20px;
   }
 }
