@@ -397,9 +397,37 @@ label {
     line-height: 40px;
     margin: 10px;
   }
+  .inputTitle {
+    font-size: 15px;
+    width: 200px;
+  }
+  ::placeholder {
+    font-size: 15px;
+  }
 
   .loading {
     font-size: 1rem;
+  }
+  .sortContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .containerSortFilter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    margin: 10px;
+  }
+  .filterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .divider {
+    display: none;
   }
 
   .addBtn {
