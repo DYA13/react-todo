@@ -209,9 +209,6 @@ label {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 20px;
-  padding: 10px;
-  margin: 25px;
 }
 .todoList {
   display: flex;
@@ -224,7 +221,6 @@ label {
   line-height: 45px;
   text-align: center;
   text-shadow: 0 1px 1px #fff;
-  padding: 0;
 }
 /* TodoListItem */
 
@@ -498,9 +494,9 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     align-items: center;
-    width: 630px;
   }
   .filterContainer {
     display: flex;
