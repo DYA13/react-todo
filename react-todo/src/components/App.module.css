@@ -205,8 +205,12 @@ label {
 
 .todolistContainer {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
+  margin-top: 20px;
+  padding: 10px;
   margin: 25px;
 }
 .todoList {
@@ -429,9 +433,7 @@ label {
   .divider {
     display: none;
   }
-  .todoList {
-    width: 300px;
-  }
+
   .addBtn {
     font-size: 12px;
   }
@@ -492,14 +494,13 @@ label {
     width: 500px;
     margin: 20px;
   }
-  .todoList {
+  .todolistContainer {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
-    width: 700px;
-    margin: 20px;
+    width: 630px;
   }
   .filterContainer {
     display: flex;
